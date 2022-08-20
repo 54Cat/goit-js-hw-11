@@ -45,6 +45,7 @@ function filterResponse(query) {
         notFound();
     } else if (page >= totalPage){
         hidenBtn();
+        createGalleryList(query);
         theEnd();
     } else if (page === 1) {
         console.log("page === 1");
