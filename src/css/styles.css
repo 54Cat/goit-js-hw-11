@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #fafafa;
+    color: #212121;
+    line-height: 1.5;
+    margin: 57px 15px 15px 15px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    position: relative;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(63, 87, 179);
+    z-index: 100;
+}
+
+.search-form>input {
+    margin-right: 15px;
+}
+
+.gallery-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: calc(100% / 3 - 15px);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.photo-card {
+    margin-right: 30px;
+    margin-bottom: 30px;
+    flex-basis: calc((100% - 90px) / 3);
+}
+
+.photo-card:nth-child(3n) {
+    margin-right: 0px;
+}
+
+.photo-card:nth-child(n+38) {
+    margin-bottom: 0;
+}
+
+.photo-thumb {
+    position: relative;
+    height: 185px;
+    width: 100%;
+}
+
+.gallery-link {
+    width: 100%;
+}
+
+.gallery-link:hover,
+.gallery-link:focus {
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+            1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+.gallery-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.info-list {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 5px;
+    background-color: rgb(240, 240, 240);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.info-item:last-child {
+    margin-right: 0;
+}
+
+.info-item>span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* .visually-hidden{
+    display: none;
+} */
+
+.load-more{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.load-more.visually-hidden {
+    display: none;
+}
