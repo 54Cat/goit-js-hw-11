@@ -1,5 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { imagesApiService, PER_PAGE } from './js/fetch';
 
 const searchForm = document.querySelector('#search-form');
@@ -7,6 +9,8 @@ const btnLoadMore = document.querySelector('#load-more');
 const galleryEl = document.querySelector('.gallery-list');
 let page = 1;
 let searchQuery = '';
+
+const lightbox = new SimpleLightbox('.gallery-link', { captions: true, captionSelector: 'img', captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250 });
 
 searchForm.addEventListener('submit', onSearchQuery);
 btnLoadMore.addEventListener('click', onLoadMore);
@@ -38,6 +42,7 @@ async function responseData() {
 }
 
 function filterResponse(query) {
+
     const totalPage = Math.ceil(query.totalHits / PER_PAGE);
     if (query.totalHits === 0) {
         hidenBtn();
@@ -48,17 +53,15 @@ function filterResponse(query) {
         createGalleryList(query);
         theEnd();
     } else if (page === 1) {
-        console.log("page === 1");
-        
         foundImages(query.totalHits);
         visibleBtn();
         createGalleryList(query);
         additionally();
+        lightbox.refresh();
     } else {
-        console.log("последний else");
-
         createGalleryList(query);
         additionally();
+        lightbox.refresh();
     }
 }
 
