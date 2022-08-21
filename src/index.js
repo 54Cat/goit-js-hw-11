@@ -18,51 +18,16 @@ hidenBtn();
 
 function onSearchQuery(e) {
     e.preventDefault();
-    removeData();
-
     searchQuery = e.currentTarget.elements.searchQuery.value.trim();
 
-    if (searchQuery !== '') {
-        hidenBtn();
-        resetPage();
-        responseData();
+    if (searchQuery === '') {
+        return;
     }
 
-    return;
-}
-
-async function responseData() {
-    try {
-        const response = await imagesApiService(searchQuery, page);
-        filterResponse(response);
-    } catch (error) {
-        console.log(error);   
-        unknownError();
-    }     
-}
-
-function filterResponse(query) {
-
-    const totalPage = Math.ceil(query.totalHits / PER_PAGE);
-    if (query.totalHits === 0) {
-        hidenBtn();
-        removeData();
-        notFound();
-    } else if (page >= totalPage){
-        hidenBtn();
-        createGalleryList(query);
-        theEnd();
-    } else if (page === 1) {
-        foundImages(query.totalHits);
-        visibleBtn();
-        createGalleryList(query);
-        additionally();
-        lightbox.refresh();
-    } else {
-        createGalleryList(query);
-        additionally();
-        lightbox.refresh();
-    }
+    removeData();
+    hidenBtn();
+    resetPage();
+    responseData();
 }
 
 function onLoadMore() {
@@ -70,7 +35,40 @@ function onLoadMore() {
     responseData();
 }
 
-function createGalleryList(query) {
+async function responseData() {
+    try {
+        const response = await imagesApiService(searchQuery, page);
+        handleResponse(response);
+    } catch (error) {
+        console.log(error);   
+        unknownError();
+    }     
+}
+
+function handleResponse(query) {
+
+    const totalPage = Math.ceil(query.totalHits / PER_PAGE);
+    if (query.totalHits === 0) {
+        hidenBtn();
+        notFound();
+    } else if (page >= totalPage){
+        hidenBtn();
+        insertGalleryList(query);
+        notifyEndFind();
+    } else if (page === 1) {
+        foundImages(query.totalHits);
+        visibleBtn();
+        insertGalleryList(query);
+        scrollToBottom();
+        lightbox.refresh();
+    } else {
+        insertGalleryList(query);
+        scrollToBottom();
+        lightbox.refresh();
+    }
+}
+
+function insertGalleryList(query) {
   const markup = query.hits.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
       return `<li class="photo-card">
             <div class="photo-thumb">
@@ -116,7 +114,7 @@ function foundImages(totalHits) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 }
 
-function theEnd() {
+function notifyEndFind() {
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
 }
 
@@ -136,11 +134,10 @@ function resetPage() {
     page = 1;
 }
 
-function additionally() {
-    const { height: cardHeight } = document.querySelector('.photo-card').firstElementChild.getBoundingClientRect();
-
+function scrollToBottom() {
+const galleryCard = galleryEl.getBoundingClientRect();
     window.scrollBy({
-        top: cardHeight * 14,
+        top: galleryCard.height,
         behavior: 'smooth',
     })
 }
