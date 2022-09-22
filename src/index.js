@@ -31,7 +31,7 @@ function onSearchQuery(e) {
 }
 
 function onLoadMore() {
-    incrementPage();    
+    incrementPage();
     responseData();
 }
 
@@ -40,9 +40,9 @@ async function responseData() {
         const response = await imagesApiService(searchQuery, page);
         handleResponse(response);
     } catch (error) {
-        console.log(error);   
+        console.log(error);
         unknownError();
-    }     
+    }
 }
 
 function handleResponse(query) {
@@ -51,7 +51,7 @@ function handleResponse(query) {
     if (query.totalHits === 0) {
         hidenBtn();
         notFound();
-    } else if (page >= totalPage){
+    } else if (page >= totalPage) {
         hidenBtn();
         insertGalleryList(query);
         notifyEndFind();
@@ -69,8 +69,8 @@ function handleResponse(query) {
 }
 
 function insertGalleryList(query) {
-  const markup = query.hits.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
-      return `<li class="photo-card">
+    const markup = query.hits.map(({ largeImageURL, webformatURL, tags, likes, views, comments, downloads }) => {
+        return `<li class="photo-card">
             <div class="photo-thumb">
                 <a class="gallery-link" href="${largeImageURL}">
                     <img class="gallery-image" src="${webformatURL}" alt="${tags}" loading="lazy" />
@@ -135,7 +135,7 @@ function resetPage() {
 }
 
 function scrollToBottom() {
-const galleryCard = galleryEl.getBoundingClientRect();
+    const galleryCard = galleryEl.getBoundingClientRect();
     window.scrollBy({
         top: galleryCard.height,
         behavior: 'smooth',
